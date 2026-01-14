@@ -1,15 +1,10 @@
-
 RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
+RewriteBase /sistema/backend/
+
+# Si el archivo o directorio existe, se sirve directamente
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# En otro caso, delegamos en index.php de CodeIgniter
 RewriteRule ^(.*)$ index.php/$1 [L]
-
-# Deshabilitar listado de directorios
-Options -Indexes
-
-# Proteger archivos sensibles
-<FilesMatch "^\.">
-    Order allow,deny
-    Deny from all
-</FilesMatch>
-
