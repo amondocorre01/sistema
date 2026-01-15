@@ -2,7 +2,11 @@
   RewriteEngine On
   RewriteBase /sistema/
 
-  # Entrega directa de archivos reales
+  # No reescribir archivos estáticos (JS, CSS, imágenes)
+  RewriteCond %{REQUEST_URI} \.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot)$ [NC]
+  RewriteRule ^ - [L]
+
+  # Entrega directa de archivos y directorios reales
   RewriteCond %{REQUEST_FILENAME} -f [OR]
   RewriteCond %{REQUEST_FILENAME} -d
   RewriteRule ^ - [L]
