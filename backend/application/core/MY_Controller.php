@@ -63,7 +63,23 @@ class MY_Controller extends CI_Controller {
         $errors = [];
         
         foreach ($fields as $field => $label) {
-            if (!isset($data[$field]) || empty($data[$field])) {
+            $is_missing = false;
+
+            if (!array_key_exists($field, $data)) {
+                $is_missing = true;
+            } else {
+                $value = $data[$field];
+
+                if (is_string($value)) {
+                    $is_missing = trim($value) === '';
+                } elseif ($value === null) {
+                    $is_missing = true;
+                } elseif (is_array($value)) {
+                    $is_missing = empty($value);
+                }
+            }
+
+            if ($is_missing) {
                 $errors[$field] = "El campo {$label} es requerido";
             }
         }
