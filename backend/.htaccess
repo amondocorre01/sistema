@@ -1,6 +1,10 @@
 RewriteEngine On
 RewriteBase /sistema/backend/
 
+# Asegura que el encabezado Authorization llegue a PHP (JWT)
+RewriteCond %{HTTP:Authorization} .
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
 # Si el archivo o directorio existe, se sirve directamente
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
